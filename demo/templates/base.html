@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<HTML>
+	<HEAD>
+		<meta charset="utf-8">
+		<TITLE>{% block title %} Titulo Base {% endblock %}</TITLE>
+		{% block css %}<link rel="stylesheet" href="/media/css/style.css"> {% endblock %}
+	</HEAD>
+	<BODY>
+		<HEADER>
+			<img src="/media/images/django.gif"/>
+			<H1>Proyecto Demo (Venta de Productos)</H1>
+			<NAV>
+				<a href="{% url vista_principal %}">Inicio</a>
+				<a href="{% url vista_productos %}">Productos</a>
+				<a href="{% url vista_contacto %}">Contactos</a>
+				<a href="{% url vista_about %}">Acerca de...</a>
+				{% if user.is_authenticated %}
+				<a href="{% url vista_logout %}">Cerrar sesion</a>
+				{% else %}
+				<a href="{% url vista_login %}">Login</a>
+				{% endif %}
+			</NAV>
+		</HEADER>
+		<SECTION>
+			{% block content %}
+
+			{% endblock %}
+		</SECTION>
+	</BODY>
+</HTML>
