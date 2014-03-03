@@ -8,9 +8,27 @@
 {% endif %}
 {% if productos %}
 	{% for p in productos %}
-		<p>{{ p.nombre }}</p>
+		<p><a href="/producto/{{ p.id }}">{{ p.nombre }}</a></p>
 	{% endfor %}
 {% else %}
 	<h2>No existen productos activos a la venta.</h2>
 {% endif %}
+
+{% if productos %}
+	<a href="/productos/page/1"> << </a>
+	{% if productos.has_previous %}
+		<a href="/productos/page/{{ productos.previous_page_number }}/"> Prev </a>
+	{% else %}	
+		<a href="#"> Prev </a>
+	{% endif %}
+	{% if productos.has_next %}
+		<a href="/productos/page/{{ productos.next_page_number }}/"> Next </a>
+	{% else %}	
+		<a href="#"> Next </a>
+	{% endif %}
+	<a href="/productos/page/{{ productos.paginator.num_pages }}"> >> </a>
+	<br><br>
+	<h4>Pagina {{ productos.number }} de {{ productos.paginator.num_pages }}</h4>
+{% endif %}
+
 {% endblock %}

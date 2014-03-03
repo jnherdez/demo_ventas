@@ -7,20 +7,34 @@ from django.core.mail import EmailMultiAlternatives #Enviamos HTML
 
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, InvalidPage
 
 def index_view(request):
-	return render_to_response('home/index.html', context_instance=
-RequestContext(request))
+	return render_to_response('home/index.html', context_instance= RequestContext(request))
 
 def about_view(request):
 	mensaje = "Esto es un mensaje desde mi vista"
 	ctx = {'msg': mensaje}
 	return render_to_response('home/about.html',ctx, context_instance=RequestContext(request))
 
-def productos_view(request):
-	prod = producto.objects.filter(status=True) #Select * from ventas_productos where status = True
-	ctx = {'productos': prod}	
+def productos_view(request, pagina):
+	lista_prod = producto.objects.filter(status=True) #Select * from ventas_productos where status = True
+	paginator = Paginator(lista_prod, 3) #Cuantos productos son por pagina
+	try:
+		page = int(pagina)
+	except:
+		page = 1
+	try:
+		productos = paginator.page(page)
+	except (EmptyPage, InvalidPage):
+		productos = paginator.page(paginator.num_pages)
+	ctx = {'productos': productos}	
 	return render_to_response('home/productos.html', ctx, context_instance=RequestContext(request))
+
+def singleProduct_view(request, id_prod):
+	prod = producto.objects.get(id = id_prod)
+	ctx = {'producto':prod}
+	return render_to_response('home/SingleProducto.html', ctx, context_instance=RequestContext(request))
 
 def contacto_view(request):
 	info_enviado = False #deifinir si se envio o no la informacion
