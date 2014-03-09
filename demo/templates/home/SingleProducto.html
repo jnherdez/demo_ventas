@@ -6,6 +6,12 @@
 <p>{{ producto.descripcion }}</p>
 <p>${{ producto.precio }}</p>
 <p>Cantidad en Existencia: {{ producto.stock }} unidades</p>
+<h5>Categorias:</h5>
+<ul>
+{% for cat in categorias %}
+	<li>{{ cat.nombre }}</li>
+{% endfor %}
+</ul>
 {% if producto.stock > 0 %}
 	<a href="#">Comprar producto</a>
 {% endif %}

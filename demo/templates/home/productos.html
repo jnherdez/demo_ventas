@@ -9,7 +9,7 @@
 {% if productos %}
 	{% for p in productos %}
 		<p><a href="/producto/{{ p.id }}">{{ p.nombre }}</a></p>
-		{% if user.is_authenticated %}
+		{% if user.is_authenticated and user.is_staff %}
 			<p><a href="/edit/producto/{{ p.id }}/">Editar</a></p>
 		{% endif %}
 	{% endfor %}
