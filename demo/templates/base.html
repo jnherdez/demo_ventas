@@ -4,6 +4,23 @@
 		<meta charset="utf-8">
 		<TITLE>{% block title %} Titulo Base {% endblock %}</TITLE>
 		{% block css %}<link rel="stylesheet" href="/media/css/style.css"> {% endblock %}
+		<script src="/media/js/jquery-1.11.0.js"></script>
+		<script type="text/javascript">
+			$(document).on("ready", function(){
+				$.ajax({
+					type: "GET",
+					contentType: "application/json; chaset=utf-8",
+					dataType: "json",
+					url: "/ws/productos/",
+					success: function(response){
+						var i = (response.length-1)-2;
+						for (i; i<=(response.length-1); i++){
+							$('#ProductosNuevos').append("<li>"+ response[i].fields.nombre +"</li>");
+						}
+					}
+				});
+			});
+		</script>
 	</HEAD>
 	<BODY>
 		<HEADER>
@@ -26,5 +43,10 @@
 
 			{% endblock %}
 		</SECTION>
+		<div>
+			<H3>Productos nuevos</H3>
+			<ul id="ProductosNuevos">
+			</ul>
+		</div>	
 	</BODY>
 </HTML>

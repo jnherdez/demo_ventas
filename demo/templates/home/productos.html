@@ -9,6 +9,9 @@
 {% if productos %}
 	{% for p in productos %}
 		<p><a href="/producto/{{ p.id }}">{{ p.nombre }}</a></p>
+		{% if user.is_authenticated %}
+			<p><a href="/edit/producto/{{ p.id }}/">Editar</a></p>
+		{% endif %}
 	{% endfor %}
 {% else %}
 	<h2>No existen productos activos a la venta.</h2>
